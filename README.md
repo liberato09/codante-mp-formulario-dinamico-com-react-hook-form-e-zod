@@ -52,26 +52,26 @@ A documentação da API está em <a target="_blank" href="https://apis-docs.coda
 - Todo o formulário deverá ser "regido" pela biblioteca `React Hook Form`.
 - A validação deverá ser "regida" pela biblioteca `Zod`.
 - A validação dos dados deverá ocorrer no front-end de acordo com as regras estipuladas:
-    - `name`: obrigatório, máximo de 255 caracteres.
-    - `email`: obrigatório, deve ser um e-mail válido, máximo de 255 caracteres.
-    - `password`: obrigatório, mínimo de 8 caracteres, máximo de 255 caracteres.
-    - `password_confirmation`: obrigatório, mínimo de 8 caracteres, máximo de 255 caracteres.
-    - `terms`: obrigatório, deve ser um booleano.
-    - `phone`: obrigatório, máximo de 20 caracteres.
-    - `cpf`: obrigatório, máximo de 14 caracteres, deve seguir o padrão 000.000.000-00, deve ser um CPF válido.
-    - `zipcode`: obrigatório, máximo de 9 caracteres, deve seguir o padrão 00000-000.
-    - `address`: obrigatório, máximo de 255 caracteres.
-    - `city`: obrigatório, máximo de 255 caracteres.
+  - `name`: obrigatório, máximo de 255 caracteres.
+  - `email`: obrigatório, deve ser um e-mail válido, máximo de 255 caracteres.
+  - `password`: obrigatório, mínimo de 8 caracteres, máximo de 255 caracteres.
+  - `password_confirmation`: obrigatório, mínimo de 8 caracteres, máximo de 255 caracteres.
+  - `terms`: obrigatório, deve ser um booleano.
+  - `phone`: obrigatório, máximo de 20 caracteres.
+  - `cpf`: obrigatório, máximo de 14 caracteres, deve seguir o padrão 000.000.000-00, deve ser um CPF válido.
+  - `zipcode`: obrigatório, máximo de 9 caracteres, deve seguir o padrão 00000-000.
+  - `address`: obrigatório, máximo de 255 caracteres.
+  - `city`: obrigatório, máximo de 255 caracteres.
 - Todos os dados devem ser submetidos de uma vez só para o endpoint da API do Codante.
 
 > [!NOTE]  
-> Zod é uma biblioteca de validação que funciona tanto no _node_ como em _browsers_. Esse projeto é um SPA, o que significa que iremos usar apenas no _browser (client side)._ 
+> Zod é uma biblioteca de validação que funciona tanto no _node_ como em _browsers_. Esse projeto é um SPA, o que significa que iremos usar apenas no _browser (client side)._
 
 **Implementação de validação server-side**
 
-Além da validação client-side, a nossa **API** também implementa uma validação *server-side*. Um exemplo que pode ser explorado é o caso do campo `cpf`: na validação *client-side* vamos checar apenas o "formato" do CPF, enquanto na validação *server-side* da API também checamos se o CPF é válido pelo seu dígito verificador.
+Além da validação client-side, a nossa **API** também implementa uma validação _server-side_. Um exemplo que pode ser explorado é o caso do campo `cpf`: na validação _client-side_ vamos checar apenas o "formato" do CPF, enquanto na validação _server-side_ da API também checamos se o CPF é válido pelo seu dígito verificador.
 
-- Implemente, além da validação *client-side*, também as mensagens de erro de validação retornadas pela API.
+- Implemente, além da validação _client-side_, também as mensagens de erro de validação retornadas pela API.
 
 ## 🔨 Desafio extra para quem quer ir além
 
@@ -85,8 +85,8 @@ Neste Mini Projeto, não será preciso implementar nenhum design - já fizemos i
 
 #### Formulários com React Hook Form e Zod
 
-- Validação *client-side*
-- Validação *server-side*
+- Validação _client-side_
+- Validação _server-side_
 - `schemas` no `zod`
 - Biblioteca `react-hook-form`
 
@@ -100,9 +100,18 @@ Neste Mini Projeto, não será preciso implementar nenhum design - já fizemos i
 
 - React básico/intermediário
 
-
 ## Dependências
 
-- use-mask-input
-- react-hook-form
-- @hookform/error-message
+- [use-mask-input](https://www.npmjs.com/package/use-mask-input). API para definir máscaras para inputs. Compatível com o react-hook-form
+- [react-hook-form](https://www.react-hook-form.com/). API para controlar formulários
+- [@hookform/error-message](https://www.npmjs.com/package/@hookform/error-message). Componente para renderizar erros associados aos inputs do react-hook-form.
+- [zod](https://zod.dev/)
+- [@hookform/resolvers](https://www.npmjs.com/package/@hookform/resolvers). "Resolvedores" para conectar o zod no RHF
+
+```
+pnpm i use-mask-input
+pnpm i react-hook-form
+pnpm i @hookform/error-message
+pnpm i zod
+pnpm i @hookform/resolvers
+```

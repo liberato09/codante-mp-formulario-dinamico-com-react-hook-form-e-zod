@@ -1,11 +1,8 @@
+import { ErrorMessage } from "@hookform/error-message";
 import { EyeIcon, EyeOffIcon, Loader } from "lucide-react";
 import { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { useHookFormMask } from "use-mask-input";
-import { ErrorMessage } from "@hookform/error-message";
-import { zodResolver } from "@hookform//resolvers/zod";
-import type { UserRegister } from "../schema";
-import { userRegisterSchema } from "../schema";
 
 export default function Form() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -17,7 +14,7 @@ export default function Form() {
     setValue,
     setError,
     formState: { isSubmitting, errors },
-  } = useForm<UserRegister>({ resolver: zodResolver(userRegisterSchema) }); // hook do react-hook-form
+  } = useForm(); // hook do react-hook-form
 
   const registerWithMask = useHookFormMask(register);
 
@@ -53,10 +50,7 @@ export default function Form() {
       // setError('email', { type: 'manual', message: 'CPF não é válido' });
 
       for (const field in resData.errors) {
-        setError(field as keyof UserRegister, {
-          type: "manual",
-          message: resData.errors[field],
-        });
+        setError(field, { type: "manual", message: resData.errors[field] });
       }
     }
     console.log(resData);
@@ -66,7 +60,17 @@ export default function Form() {
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="mb-4">
         <label htmlFor="name">Nome Completo</label>
-        <input type="text" id="name" {...register("name")} />
+        <input
+          type="text"
+          id="name"
+          {...register("name", {
+            required: "Nome é obrigatório",
+            maxLength: {
+              value: 255,
+              message: "Nome deve ter no máximo 255 caracteres",
+            },
+          })}
+        />
         {/* {errors.name && (
           <p className="mt-1 text-xs text-red-400">
             {errors.name?.message as string}
@@ -78,7 +82,18 @@ export default function Form() {
       </div>
       <div className="mb-4">
         <label htmlFor="email">E-mail</label>
-        <input className="" type="email" id="email" {...register("email")} />
+        <input
+          className=""
+          type="email"
+          id="email"
+          {...register("email", {
+            required: "E-mail é obrigatório",
+            pattern: {
+              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+              message: "E-mail inválido",
+            },
+          })}
+        />
         <p className="mt-1 text-xs text-red-400">
           <ErrorMessage errors={errors} name="email" />
         </p>
@@ -90,7 +105,13 @@ export default function Form() {
           <input
             type={isPasswordVisible ? "text" : "password"}
             id="password"
-            {...register("password")}
+            {...register("password", {
+              required: "Senha é obrigatória",
+              minLength: {
+                value: 8,
+                message: "Senha deve ter no mínimo 8 caracteres",
+              },
+            })}
           />
           <span className="absolute right-3 top-3">
             <button
@@ -120,7 +141,16 @@ export default function Form() {
           <input
             type={isPasswordVisible ? "text" : "password"}
             id="confirm-password"
-            {...register("password_confirmation")}
+            {...register("password_confirmation", {
+              required: "Confirmação de senha é obrigatória",
+              minLength: {
+                value: 8,
+                message: "Senha deve ter no mínimo 8 caracteres",
+              },
+              validate: (value, formValues) => {
+                return value === formValues.password || "Senhas não coincidem";
+              },
+            })}
           />
           <span className="absolute right-3 top-3">
             <button
@@ -149,7 +179,13 @@ export default function Form() {
         <input
           type="text"
           id="phone"
-          {...registerWithMask("phone", "(99) 99999-9999")}
+          {...registerWithMask("phone", "(99) 99999-9999", {
+            required: "Telefone é obrigatório",
+            pattern: {
+              value: /^\(\d{2}\) \d{5}-\d{4}$/,
+              message: "Telefone inválido",
+            },
+          })}
         />
         <p className="mt-1 text-xs text-red-400">
           <ErrorMessage errors={errors} name="phone" />
@@ -162,7 +198,13 @@ export default function Form() {
         <input
           type="text"
           id="cpf"
-          {...registerWithMask("cpf", "999.999.999-99")}
+          {...registerWithMask("cpf", "999.999.999-99", {
+            required: "CPF é obrigatório",
+            pattern: {
+              value: /^\d{3}\.\d{3}\.\d{3}-\d{2}$/,
+              message: "CPF inválido",
+            },
+          })}
         />
         <p className="mt-1 text-xs text-red-400">
           <ErrorMessage errors={errors} name="cpf" />
@@ -176,7 +218,12 @@ export default function Form() {
           type="text"
           id="cep"
           {...registerWithMask("zipcode", "99999-999", {
-            onBlur: handleZipcodeBlur,
+            required: "CEP é obrigatório",
+            pattern: {
+              value: /^\d{5}-\d{3}$/,
+              message: "CEP inválido",
+            },
+            onBlur: handleZipcodeBlur, // passando o onBlur para o hook
           })}
           // onBlur={handleZipcodeBlur}
         />
@@ -211,7 +258,9 @@ export default function Form() {
           type="checkbox"
           id="terms"
           className="mr-2 accent-slate-500"
-          {...register("terms")}
+          {...register("terms", {
+            required: "Aceite os termos e condições",
+          })}
         />
         <label
           className="text-sm  font-light text-slate-500 mb-1 inline"
