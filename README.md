@@ -99,3 +99,10 @@ Neste Mini Projeto, não será preciso implementar nenhum design - já fizemos i
 ## Pré-requisitos
 
 - React básico/intermediário
+
+
+## Dependências
+
+- use-mask-input
+- react-hook-form
+- @hookform/error-message
