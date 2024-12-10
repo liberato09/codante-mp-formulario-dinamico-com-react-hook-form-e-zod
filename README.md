@@ -107,6 +107,7 @@ Neste Mini Projeto, não será preciso implementar nenhum design - já fizemos i
 - [@hookform/error-message](https://www.npmjs.com/package/@hookform/error-message). Componente para renderizar erros associados aos inputs do react-hook-form.
 - [zod](https://zod.dev/)
 - [@hookform/resolvers](https://www.npmjs.com/package/@hookform/resolvers). "Resolvedores" para conectar o zod no RHF
+- [react-hot-toast](https://react-hot-toast.com/)
 
 ```
 pnpm i use-mask-input
@@ -114,4 +115,5 @@ pnpm i react-hook-form
 pnpm i @hookform/error-message
 pnpm i zod
 pnpm i @hookform/resolvers
+pnpm i react-hot-toast
 ```

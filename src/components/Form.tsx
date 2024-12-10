@@ -6,6 +6,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { zodResolver } from "@hookform//resolvers/zod";
 import type { UserRegister } from "../schema";
 import { userRegisterSchema } from "../schema";
+import toast from "react-hot-toast";
 
 export default function Form() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -16,6 +17,7 @@ export default function Form() {
     handleSubmit,
     setValue,
     setError,
+    reset,
     formState: { isSubmitting, errors },
   } = useForm<UserRegister>({ resolver: zodResolver(userRegisterSchema) }); // hook do react-hook-form
 
@@ -58,6 +60,10 @@ export default function Form() {
           message: resData.errors[field],
         });
       }
+      toast.error("Erro ao cadastrar usuário");
+    } else {
+      toast.success("Usuário cadastrado com sucesso");
+      reset();
     }
     console.log(resData);
   }
